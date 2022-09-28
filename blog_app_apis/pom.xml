@@ -10,7 +10,7 @@
 	<groupId>com.springboot.blog</groupId>
 	<artifactId>blog_app_apis</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>blog.app.apis</name>
+	<name>blog_app_apis</name>
 	<description>This is about Blog apis</description>
 	<properties>
 		<java.version>8</java.version>
