@@ -1,8 +1,10 @@
 package com.springboot.blog.exceptions;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class ResourceNotFoundException extends RuntimeException {
 	String resourceName;
 	String fieldName;

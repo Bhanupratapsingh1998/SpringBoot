@@ -1,12 +1,16 @@
 package com.springboot.blog.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +29,7 @@ import com.springboot.blog.payloads.PostResponse;
 import com.springboot.blog.service.FileService;
 import com.springboot.blog.service.PostService;
 
+import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/api/")
@@ -70,6 +75,8 @@ public class PostController {
 			@RequestParam(value = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) Integer pageSize,
 			@RequestParam(value = "sortBy", defaultValue = AppConstants.SORT_BY, required = false) String sortBy,
 			@RequestParam(value = "sortDir", defaultValue = AppConstants.SORT_DIR, required = false) String sortDir) {
+		
+		System.out.println("Pankaj");
 		PostResponse postResponse = this.postService.getAllPost(pageNum, pageSize, sortBy, sortDir);
 		return new ResponseEntity<PostResponse>(postResponse, HttpStatus.OK);
 	}
@@ -77,6 +84,7 @@ public class PostController {
 	// Get post details by id
 	@GetMapping("/posts/{postId}")
 	public ResponseEntity<PostDto> getPostById(@PathVariable Integer postId) {
+		System.out.println("hii");
 		PostDto postDto = this.postService.getPostById(postId);
 		return new ResponseEntity<PostDto>(postDto, HttpStatus.OK);
 	}
@@ -115,4 +123,15 @@ public class PostController {
 
 		return new ResponseEntity<PostDto>(updatePost, HttpStatus.OK);
 	}
+
+	// To serve files
+	@GetMapping(value = "/posts/image/{imgName}", produces = MediaType.IMAGE_JPEG_VALUE)
+	public void downloadImage(@PathVariable("imgName") String imgName, HttpServletResponse response)
+			throws IOException
+	{
+		InputStream resource = this.fileService.getResource(path, imgName);
+		response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+		StreamUtils.copy(resource,response.getOutputStream());
+	}
+	
 }
