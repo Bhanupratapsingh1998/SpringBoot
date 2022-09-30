@@ -5,8 +5,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.springboot.blog.payloads.CommentDto;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -48,6 +46,6 @@ public class Post {
 	private User user;
 	
 	@OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
-	private Set<CommentDto> comments = new HashSet<>();
+	private Set<Comment> comments = new HashSet<>();
 	
 }
