@@ -29,8 +29,8 @@ public class ProductController {
     public Map<String, List<Product>> getByPrice() {
         int price = 30000;
 
-        // List<Product> geProducts = productRepository.findNameAndPriceWherePriceLessThanEqual(price);
-        List<Product> geProducts = productRepository.findAll();
+        List<Product> geProducts = productRepository.findNameAndPriceWherePriceLessThanEqual(price);
+        // List<Product> geProducts = productRepository.findAll();
         List<Product> products = geProducts.stream().filter(product->product.getPrice()<= price).peek(System.out::println).collect(Collectors.toList());
 
         // Map<Double, List<Product>> groupedProducts = products.stream()
